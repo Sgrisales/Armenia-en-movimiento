@@ -1,0 +1,226 @@
+:root {
+  --bg: #071321;
+  --panel: #0c1b2b;
+  --panel-2: #10243a;
+  --line: #243b53;
+  --text: #f2f7fc;
+  --muted: #a9bbcd;
+  --blue: #1688ff;
+  --cyan: #4ed9f3;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+.topbar { min-height: 76px; display: flex; align-items: center; gap: 14px; padding: 12px 22px; background: #091726; border-bottom: 1px solid var(--line); }
+.brand-mark { width: 46px; height: 46px; border: 1px solid #54d8ef; border-radius: 12px; display: grid; place-items: center; font-weight: 800; color: var(--cyan); letter-spacing: -1px; }
+.brand-copy h1 { font-size: clamp(18px, 2vw, 26px); margin: 0; letter-spacing: -.5px; }
+.brand-copy p { margin: 3px 0 0; color: var(--cyan); font-size: 13px; }
+.live-status { margin-left: auto; display: flex; align-items: center; gap: 9px; color: #d2deea; font-size: 12px; }
+.status-dot { width: 9px; height: 9px; border-radius: 50%; background: #f5a623; box-shadow: 0 0 10px #f5a62366; }
+.app-shell { min-height: calc(100vh - 118px); display: grid; grid-template-columns: 245px minmax(300px, 1fr) 300px; }
+.sidebar, .rightbar { background: var(--panel); padding: 15px; overflow-y: auto; }
+.sidebar { border-right: 1px solid var(--line); }
+.rightbar { border-left: 1px solid var(--line); }
+.panel-section, .stat-card { padding: 13px; margin-bottom: 13px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(145deg, #0e2032, #0a1725); }
+h2 { font-size: 14px; margin: 0 0 13px; font-weight: 700; }
+p { line-height: 1.45; }
+.muted, .small-note { color: var(--muted); font-size: 12px; }
+.small-note { margin: 10px 0 0; }
+.layer-option { display: flex; align-items: center; gap: 9px; padding: 8px 0; font-size: 12px; cursor: pointer; }
+input[type="checkbox"] { accent-color: var(--blue); width: 16px; height: 16px; }
+.legend-dot { display: inline-block; width: 12px; height: 12px; flex: 0 0 auto; border-radius: 50%; }
+.legend-dot.heat { background: #ff392f; box-shadow: 0 0 10px #ff392f99; }
+.legend-dot.place { background: var(--cyan); }
+.legend-dot.big { width: 18px; height: 18px; }
+.legend-line { display: inline-block; width: 22px; height: 5px; border-radius: 4px; flex: 0 0 auto; }
+.legend-line.traffic { background: linear-gradient(90deg, #20c55a, #ffca28, #ff3b30); }
+.legend-line.fluid { background: #20c55a; }
+.legend-line.moderate { background: #ffca28; }
+.legend-line.congested { background: #ff3b30; }
+input[type="file"] { display: none; }
+.file-button, button { border: 1px solid #31516f; border-radius: 8px; padding: 10px 12px; color: white; background: #15314d; cursor: pointer; font-size: 12px; }
+.file-button { display: block; text-align: center; background: #116ed0; border-color: #1688ff; }
+button:hover, .file-button:hover { filter: brightness(1.12); }
+.segmented { display: flex; flex-wrap: wrap; gap: 6px; }
+.range-button { flex: 1; padding: 9px 6px; }
+.range-button.active { background: var(--blue); border-color: var(--blue); }
+#search-form { display: flex; gap: 6px; }
+input[type="search"] { min-width: 0; width: 100%; background: #071321; color: white; border: 1px solid #31516f; border-radius: 8px; padding: 10px; }
+.secondary-button { width: 100%; margin-top: 8px; }
+a { color: #58c8ff; font-size: 12px; }
+.map-wrap { position: relative; min-height: 620px; }
+#map { height: 100%; min-height: 620px; width: 100%; background: #142a3a; }
+.map-label { position: absolute; z-index: 500; top: 14px; left: 50%; transform: translateX(-50%); background: #081827dd; border: 1px solid #36506a; padding: 7px 12px; border-radius: 8px; font-size: 11px; letter-spacing: 1px; pointer-events: none; white-space: nowrap; }
+.map-legend { position: absolute; z-index: 500; bottom: 18px; left: 18px; background: #081827ed; border: 1px solid #36506a; border-radius: 10px; padding: 12px; font-size: 11px; display: grid; gap: 9px; box-shadow: 0 5px 20px #0005; }
+.map-legend strong { margin-bottom: 2px; }
+.map-legend div { display: flex; align-items: center; gap: 8px; }
+.card-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.card-heading h2 { margin: 0; font-size: 15px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stat-grid > div { padding: 10px; background: #071321; border-radius: 8px; }
+.stat-label { display: block; color: var(--muted); font-size: 11px; margin-bottom: 6px; }
+.stat-grid strong { font-size: 23px; }
+.traffic-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #1b3550; color: var(--cyan); font-weight: 800; }
+.metric-row { display: flex; justify-content: space-between; gap: 8px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 12px; }
+.metric-row strong { text-align: right; }
+.demo-value { color: #ffc44e; }
+.instructions { padding-left: 18px; color: #c7d5e3; font-size: 12px; line-height: 1.8; }
+code { color: #7de7f5; }
+.footer { text-align: center; color: #8fa4b8; font-size: 11px; padding: 12px; border-top: 1px solid var(--line); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: #0c1b2b; color: #f2f7fc; }
+.leaflet-popup-content { font-size: 12px; }
+@media (max-width: 1050px) {
+  .app-shell { grid-template-columns: 230px minmax(260px, 1fr); }
+  .rightbar { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; border-left: 0; border-top: 1px solid var(--line); }
+  .stat-card { margin: 0; }
+}
+@media (max-width: 700px) {
+  .topbar { padding: 10px 12px; }
+  .live-status { max-width: 115px; line-height: 1.3; }
+  .app-shell { display: flex; flex-direction: column; }
+  .map-wrap { order: 1; min-height: 58vh; }
+  #map { min-height: 58vh; }
+  .sidebar { order: 2; border-right: 0; border-top: 1px solid var(--line); }
+  .rightbar { order: 3; display: block; }
+  .stat-card { margin-bottom: 12px; }
+}
+
+#import-year { width:100%; padding:10px; margin:8px 0 12px; border-radius:8px; background:#17283b; color:#fff; border:1px solid #4d657c; }
+
+/* Visor externo de movilidad: independiente del mapa SIG */
+.waze-section { margin: 18px 22px 22px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+.waze-header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 14px; }
+.waze-header h2 { font-size: 20px; margin: 5px 0; }
+.waze-header p, .waze-disclaimer { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 5px 0; }
+.waze-kicker { color: var(--cyan); letter-spacing: 1px; font-size: 10px; font-weight: 800; }
+.waze-actions { display: flex; gap: 9px; flex-wrap: wrap; flex-shrink: 0; }
+.waze-external { display: inline-flex; align-items: center; border: 1px solid #31516f; border-radius: 8px; padding: 10px 12px; background: #116ed0; color: #fff; text-decoration: none; }
+.waze-frame-wrap { height: 510px; border: 1px solid #36506a; border-radius: 12px; overflow: hidden; background: #0d1d2c; }
+#waze-frame { display: block; width: 100%; height: 100%; border: 0; }
+.waze-disclaimer { margin-top: 10px; }
+@media (max-width: 700px) { .waze-section { margin: 12px; padding: 12px; } .waze-header { flex-direction: column; align-items: stretch; } .waze-frame-wrap { height: 480px; } }
+
+/* Control opcional de tráfico TomTom */
+.tomtom-control { margin: 12px 0; padding: 12px; border: 1px solid rgba(130,180,210,.24); border-radius: 10px; background: rgba(14,29,43,.4); }
+.tomtom-label { display:block; font-size: 12px; margin: 10px 0 6px; opacity: .9; }
+.tomtom-key-row { display:flex; gap:6px; flex-wrap:wrap; }
+.tomtom-key-row input { flex:1; min-width:130px; padding:9px; border-radius:7px; border:1px solid #587084; background:#0b1a29; color:#fff; }
+.tomtom-key-row button { padding:9px 11px; border-radius:7px; border:1px solid #4aa9c4; background:#12647a; color:white; cursor:pointer; }
+.tomtom-control .small-note { margin:8px 0 0; overflow-wrap:anywhere; }
+
+/* Estilo provisional para los resultados SHP históricos no clasificados */
+.legend-dot.historical { background: #18b9d4; box-shadow: 0 0 8px #18b9d466; }
+.map-legend small { display:block; max-width: 230px; color: var(--muted); line-height: 1.35; }
+
+/* Resultados Getis-Ord Gi* de la red vial histórica */
+#historical-legend[hidden] { display: none; }
+.map-legend.hotspot-gi-legend { min-width: 220px; max-width: 270px; max-height: 48vh; overflow-y: auto; }
+.gi-legend-row { display:flex; align-items:center; gap: 8px; }
+.gi-legend-row .legend-line { flex-shrink:0; }
+.gi-legend-count { margin-left:auto; color: #a9bccb; font-variant-numeric: tabular-nums; }
+.legend-line.gi-hot { background: #db1e2a; opacity: .856; }
+.hotspot-popup div { margin: 4px 0; }
+.hotspot-popup small { display:block; border-top: 1px solid #32536e; padding-top:6px; margin-top:7px; color:#a9bccb; }
+.hotspot-popup-swatch { display:inline-block; vertical-align:middle; width:15px; height:7px; border-radius:3px; }
+button:disabled { opacity:.48; cursor:not-allowed; }
+@media (max-width: 700px) { .map-legend.hotspot-gi-legend { left:8px; bottom:8px; padding:9px; max-width: 190px; max-height:32vh; font-size:10px; } }
+
+/* Densidad Kernel histórica: capa ráster derivada del GeoTIFF de QGIS */
+.legend-dot.kernel-dot { background:#d32020; box-shadow:0 0 8px #d3202066; }
+.kernel-opacity-label { display:flex; justify-content:space-between; gap:6px; font-size:12px; color:#d2deea; margin:8px 0 2px; }
+#kernel-opacity { width:100%; accent-color:#d32020; cursor:pointer; }
+#kernel-legend[hidden] { display:none; }
+.map-legend.kernel-legend { top:14px; right:14px; bottom:auto; left:auto; width:230px; padding:11px 12px; z-index:499; pointer-events:none; }
+.kernel-legend .kernel-gradient { display:block; height:12px; width:100%; border-radius:6px; background:linear-gradient(90deg,#fff5f0 0%,#fcbfa6 25%,#fbf5f3 50%,#d32020 75%,#67000d 100%); border:1px solid #ddd9d9; }
+.kernel-legend .kernel-gradient-labels { display:flex; justify-content:space-between; color:#c6d8e8; font-size:11px; font-variant-numeric:tabular-nums; }
+.kernel-legend small { font-size:10px; }
+@media (max-width:700px) { .map-legend.kernel-legend { top:46px; right:8px; width:180px; padding:8px; } }
+
+/* Contadores históricos de tramos calientes Gi* (no son conteos de incidentes). */
+.gi-count-panel {
+  background: #071827;
+  border: 1px solid #2b4157;
+  border-radius: 11px;
+  padding: 12px 10px;
+  margin: 6px 0 4px;
+}
+.gi-count-summary { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.gi-count-heading { display:block; font-size:11px; color:#a9bbcd; }
+.gi-count-summary strong { font-size:29px; line-height:1.15; display:block; padding-top:4px; font-variant-numeric:tabular-nums; }
+.gi-count-caption { color:#a9bbcd; text-align:right; font-size:11px; max-width:85px; }
+.gi-level-grid { display:grid; gap:6px; margin-top:11px; }
+.gi-level { display:flex; justify-content:space-between; align-items:center; gap:6px; background:#0e2437; border:1px solid #223e54; border-radius:7px; padding:7px 9px; font-size:11px; }
+.gi-level > span { display:flex; align-items:center; gap:7px; }
+.gi-level strong { font-size:16px; font-variant-numeric:tabular-nums; }
+.gi-level-line { display:inline-block; width:20px; height:5px; flex-shrink:0; border-radius:3px; }
+.gi-level-one { background:#d5bf44; }
+.gi-level-two { background:#f3860c; }
+.gi-level-three { background:#db1e2a; }
+
+/* Interfaz depurada: textos explicativos largos retirados sin cambiar las funciones GIS. */
+.sidebar .panel-section { padding: 12px; margin-bottom: 10px; }
+.sidebar .tomtom-control { margin-bottom: 0; }
+
+
+/* Presentación académica UQ — independiente de Leaflet, TomTom y Waze. */
+.academic-details { margin: 12px 20px 8px; border: 1px solid #275064; background: #0d2233; border-radius: 13px; overflow: hidden; }
+.academic-summary { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:12px 18px; cursor:pointer; list-style:none; color:#f2f7fc; font-size:13px; font-weight:700; }
+.academic-summary::-webkit-details-marker { display: none; }
+.academic-summary::after { content: '▾'; color:#b6d9e7; margin-left:auto; }
+.academic-details:not([open]) .academic-summary::after { content:'▸'; }
+.academic-summary-left { display:flex; align-items:center; gap:9px; }
+.academic-hint { color:#adc1d1; font-size:11px; font-weight:400; }
+.academic-card { border-top:1px solid #275064; padding:18px; background:linear-gradient(140deg, #10283c 0%, #0b1a2b 80%); }
+.academic-main { display:grid; grid-template-columns:minmax(180px, 250px) minmax(0, 1fr) minmax(225px, 290px); gap:16px; align-items:center; }
+.uq-logo-container { background:#f8fbfa; border-radius:12px; padding:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.uq-logo-img { display:block; width:100%; height:auto; object-fit:contain; }
+.academic-eyebrow { font-size:10px; letter-spacing:1.7px; color:#69d9ba; font-weight:750; }
+.academic-intro h2 { font-size:24px; color:#fff; margin:4px 0 5px; }
+.academic-intro p { font-size:12px; color:#d0deeb; line-height:1.55; margin:8px 0 0; max-width:1000px; }
+.academic-intro .academic-subtitle { font-size:13px; color:#91d9ed; font-weight:600; margin:0; }
+.academic-meta { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:10px; margin-top:14px; }
+.academic-meta>div { background:#081a2b; border:1px solid #2c485c; border-radius:9px; padding:11px 13px; min-height:63px; }
+.academic-meta-label { display:block; color:#82b5cb; font-size:10px; text-transform:uppercase; letter-spacing:.6px; margin-bottom:5px; }
+.academic-meta strong { display:block; color:#fff; font-size:12px; line-height:1.45; }
+/* Enfoque del proyecto: tarjeta superior derecha, junto a la introducción. */
+.academic-focus-card { background:#081a2b; border:1px solid #2c485c; border-left:3px solid #65cdb6; border-radius:9px; padding:12px 14px; align-self:stretch; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+.academic-focus-card strong { display:block; color:#edfdf9; font-size:13px; line-height:1.4; }
+.academic-focus-card p { color:#cbdfeb; font-size:11.5px; line-height:1.5; margin:7px 0 0; }
+@media(max-width:980px){.academic-main{grid-template-columns:minmax(180px, 260px) minmax(0, 1fr)}.academic-focus-card{grid-column:1/-1}}
+@media(max-width:760px){.academic-details{margin:8px 10px}.academic-main{grid-template-columns:1fr}.uq-logo-container{max-width:330px;width:100%}.academic-meta{grid-template-columns:1fr}.academic-hint{display:none}.academic-card{padding:13px}.academic-intro h2{font-size:21px}}
+
+
+/* 2026-11-15: Controles de navegación reubicados al panel derecho. */
+.rightbar .panel-section {
+  padding: 13px;
+  margin-bottom: 12px;
+}
+.rightbar .segmented {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.rightbar .range-button {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 3px;
+}
+.rightbar #search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.rightbar #search-input,
+.rightbar #search-form button,
+.rightbar #reset-view,
+.rightbar #zoom-to-history {
+  width: 100%;
+}
+.rightbar #year-status { line-height: 1.4; overflow-wrap: anywhere; }
+@media (max-width: 1050px) {
+  .rightbar { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  .rightbar .panel-section { margin-bottom: 0; }
+}
+@media (max-width: 700px) {
+  .rightbar { display: block; }
+  .rightbar .panel-section { margin-bottom: 12px; }
+}

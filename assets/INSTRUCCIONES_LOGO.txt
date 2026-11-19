@@ -1,0 +1,10 @@
+LOGOTIPO INSTITUCIONAL INCORPORADO
+
+La imagen facilitada para la presentación académica ya está incluida:
+assets/logo_uq_acreditacion.jpg
+
+Se muestra dentro del bloque grande de la presentación académica.
+Incluye el símbolo de la Universidad del Quindío y el sello de acreditación,
+respetando la composición de la imagen que suministraron los autores.
+
+El archivo index.html referencia directamente esta imagen.

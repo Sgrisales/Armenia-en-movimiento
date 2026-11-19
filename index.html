@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Armenia en Movimiento | WebGIS académico · Universidad del Quindío</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">AM</div>
+    <div class="brand-copy">
+      <h1>Armenia en Movimiento</h1>
+      <p>Geovisor de movilidad urbana · Universidad del Quindío</p>
+    </div>
+    <div class="live-status"><span class="status-dot"></span><span id="data-status">Mapa SIG · Waze en panel independiente</span></div>
+  </header>
+
+
+  <!-- Ficha académica: datos proporcionados por los autores del proyecto. -->
+  <details class="academic-details" id="ficha-academica" open>
+    <summary class="academic-summary">
+      <span class="academic-summary-left">Presentación académica del proyecto</span>
+      <span class="academic-hint">Haz clic para mostrar u ocultar</span>
+    </summary>
+    <section class="academic-card" aria-label="Información académica de Armenia en Movimiento">
+      <div class="academic-main">
+        <div class="uq-logo-container">
+          <img class="uq-logo-img" src="assets/logo_uq_acreditacion.jpg" alt="Universidad del Quindío y sello de acreditación de alta calidad" width="450" height="213" loading="eager" decoding="async">
+        </div>
+        <div class="academic-intro">
+          <span class="academic-eyebrow">SEMINARIO DE INVESTIGACION · WEBGIS</span>
+          <h2>Armenia en Movimiento</h2>
+          <p class="academic-subtitle">Geovisor web para el análisis de siniestralidad vial y la consulta de movilidad urbana en Armenia, Quindío</p>
+          <p><strong>Introducción.</strong> Armenia en Movimiento es un geovisor web desarrollado para el análisis espacial de la siniestralidad vial y la consulta de las condiciones de movilidad urbana en Armenia, Quindío. La herramienta integra resultados históricos de 2023, 2024 y 2025 mediante análisis de puntos calientes Getis-Ord Gi* y densidad Kernel. También permite consultar fuentes externas de tráfico actual, como apoyo a la identificación de sectores prioritarios y la toma de decisiones en seguridad vial.</p>
+        </div>
+        <div class="academic-focus-card">
+          <span class="academic-meta-label">Enfoque del proyecto</span>
+          <strong>Ciudades inteligentes (Smart Cities)</strong>
+          <p> El geovisor apoya la identificación de sectores prioritarios y la toma de decisiones para una movilidad urbana más segura y sostenible.</p>
+        </div>
+      </div>
+      <div class="academic-meta">
+        <div><span class="academic-meta-label">Estudiantes</span><strong>Sebastián Grisales Cabezas<br>Carlos Pino Osorio</strong></div>
+        <div><span class="academic-meta-label">Director del proyecto</span><strong>Aarón David Fiscal Ladino<br>Abogado,Magister en contratacion estatal<br>Especialista(C)Derecho urbano sostenible<br>Docente catedratico</strong></div>
+        <div><span class="academic-meta-label">Programa académico</span><strong>Ingeniería Topográfica y Geomática</strong></div>
+      </div>
+    </section>
+  </details>
+
+  <main class="app-shell">
+    <aside class="sidebar">
+      <section class="panel-section">
+        <h2>Capas del mapa</h2>
+        <label class="layer-option"><input type="checkbox" id="historical-toggle" checked> <span class="legend-line gi-hot"></span> Mostrar red vial Gi* del año seleccionado</label>
+        <div class="gi-count-panel" aria-label="Contador de tramos calientes por nivel de confianza">
+          <div class="gi-count-summary">
+            <div><span class="gi-count-heading">Tramos calientes · <span id="gi-counter-year">2023</span></span><strong id="gi-hot-total" aria-live="polite">—</strong></div>
+            <span class="gi-count-caption" id="gi-hot-percentage">Cargando…</span>
+          </div>
+          <div class="gi-level-grid">
+            <div class="gi-level"><span><i class="gi-level-line gi-level-one"></i>Nivel +1 · 90%</span><strong id="gi-hot-count-1">—</strong></div>
+            <div class="gi-level"><span><i class="gi-level-line gi-level-two"></i>Nivel +2 · 95%</span><strong id="gi-hot-count-2">—</strong></div>
+            <div class="gi-level"><span><i class="gi-level-line gi-level-three"></i>Nivel +3 · 99%</span><strong id="gi-hot-count-3">—</strong></div>
+          </div>
+        </div>
+        <div class="tomtom-control">
+          <label class="layer-option"><input type="checkbox" id="tomtom-toggle"> <span class="legend-line traffic"></span> Tráfico real · TomTom (opcional)</label>
+          <label for="tomtom-key" class="tomtom-label">Clave API de TomTom (sesión de esta pestaña)</label>
+          <div class="tomtom-key-row"><input id="tomtom-key" type="password" placeholder="Pega aquí tu API Key" autocomplete="off"><button type="button" id="tomtom-connect">Aplicar clave</button></div>
+          <p id="tomtom-status" class="small-note" role="status">Desactivado. Para ver datos reales necesitas una clave válida.</p>
+        </div>
+      </section>
+
+      <section class="panel-section" id="kernel-section">
+        <h2>Densidad Kernel · ráster</h2>
+        <label class="layer-option"><input type="checkbox" id="kernel-toggle" checked> <span class="legend-dot kernel-dot"></span> Mostrar Kernel del año seleccionado</label>
+        <label class="kernel-opacity-label" for="kernel-opacity">Opacidad: <output id="kernel-opacity-value">60%</output></label>
+        <input type="range" id="kernel-opacity" min="0" max="100" step="5" value="60" aria-label="Opacidad de la superficie Kernel">
+        <p id="kernel-status" class="small-note" role="status" aria-live="polite">Preparando ráster Kernel de 2023…</p>
+        <button type="button" class="secondary-button" id="zoom-to-kernel">Acercar a Kernel 2023</button>
+      </section>
+
+
+
+      <section class="panel-section">
+        <h2>Fuente y licencia</h2>
+        <p class="muted">Mapa base: teselas © Esri y fuentes cartográficas indicadas por el proveedor. Los HotSpots Gi* y los Kernel son resultados históricos; solo TomTom, cuando está conectado, consulta tráfico actual.</p>
+        <a href="https://www.esri.com/en-us/legal/terms/full-master-agreement" target="_blank" rel="noreferrer">Condiciones de uso de Esri</a>
+      </section>
+    </aside>
+
+    <section class="map-wrap" aria-label="Mapa interactivo de Armenia">
+      <div id="map"></div>
+      <div class="map-label">ARMENIA · QUINDÍO, COLOMBIA</div>
+      <div class="map-legend hotspot-gi-legend" id="historical-legend" hidden>
+        <strong>Red vial 2023 · estilo QGIS de 2023</strong>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#adf58a; height:2px; opacity:1"></span> Gi_Bin -3 · Frío · 99% <span class="gi-legend-count" id="gi-count-m3">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#8bcf5d; height:2px; opacity:1"></span> Gi_Bin -2 · Frío · 95% <span class="gi-legend-count" id="gi-count-m2">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#93e872; height:2px; opacity:1"></span> Gi_Bin -1 · Frío · 90% <span class="gi-legend-count" id="gi-count-m1">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#81b152; height:2px; opacity:1"></span> Gi_Bin 0 · No significativo <span class="gi-legend-count" id="gi-count-0">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#d5bf44; height:2px; opacity:1"></span> Gi_Bin 1 · Caliente · 90% <span class="gi-legend-count" id="gi-count-1">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#f3860c; height:2px; opacity:1"></span> Gi_Bin 2 · Caliente · 95% <span class="gi-legend-count" id="gi-count-2">0</span></div>
+        <div class="gi-legend-row"><span class="legend-line" style="background:#db1e2a; height:3.25px; opacity:0.856"></span> Gi_Bin 3 · Caliente · 99% <span class="gi-legend-count" id="gi-count-3">0</span></div>
+        <small>Simbología de QGIS 2023 aplicada por igual en 2023, 2024 y 2025. Tramos históricos Gi*, no tráfico en vivo.</small>
+      </div>
+      <div class="map-legend kernel-legend" id="kernel-legend" hidden>
+        <strong id="kernel-legend-title">Densidad Kernel 2023</strong>
+        <div class="kernel-gradient" aria-hidden="true"></div>
+        <div class="kernel-gradient-labels"><span>-34,597</span><span>46,179</span></div>
+        <small>Escala común QGIS 2023 · valores del ráster, no velocidades. Extremos saturados; celdas 0 transparentes.</small>
+      </div>
+    </section>
+
+    <aside class="rightbar">
+
+      <section class="panel-section">
+        <h2>Período de análisis</h2>
+        <div class="segmented">
+          <button type="button" class="range-button active" data-year="2023">2023</button>
+          <button type="button" class="range-button" data-year="2024">2024</button>
+          <button type="button" class="range-button" data-year="2025">2025</button>
+        </div>
+        <p id="year-status" class="small-note">Año 2023 seleccionado. Consultando la capa histórica…</p>
+        <button type="button" id="zoom-to-history" class="secondary-button" disabled>Acercar a resultados del año</button>
+      </section>
+      <section class="panel-section">
+        <h2>Buscar lugar</h2>
+        <form id="search-form">
+          <input id="search-input" type="search" placeholder="Ej. Parque Sucre, Centro">
+          <button type="submit">Buscar</button>
+        </form>
+        <button id="reset-view" class="secondary-button">Volver a Armenia</button>
+      </section>
+
+      <section class="stat-card">
+        <div class="card-heading"><span class="legend-dot heat big"></span><h2>Resultados Gi* · red vial</h2></div>
+        <div class="stat-grid">
+          <div><span class="stat-label">Tramos viales</span><strong id="hotspot-count">0</strong></div>
+          <div><span class="stat-label">Capa</span><strong id="hotspot-source">Sin datos</strong></div>
+        </div>
+        <p class="small-note">Clases significativas: <strong id="hotspot-class-count">—</strong></p>
+        <p class="muted">El total cuenta tramos viales, no accidentes. La clasificación proviene del geoproceso, no del tráfico TomTom.</p>
+      </section>
+
+    </aside>
+  </main>
+
+  <section class="waze-section" aria-label="Consulta independiente de tráfico actual">
+    <div class="waze-header">
+      <div>
+        <span class="waze-kicker">CONSULTA EXTERNA DE MOVILIDAD</span>
+        <h2>Tráfico actual · Waze Live Map</h2>
+        <p>Visor independiente de Waze centrado en Armenia. Sus datos no se transfieren al mapa SIG ni a los filtros históricos.</p>
+      </div>
+      <div class="waze-actions">
+        <button type="button" id="waze-refresh">Recargar visor</button>
+        <a class="waze-external" href="https://www.waze.com/live-map" target="_blank" rel="noopener noreferrer">Abrir Waze ↗</a>
+      </div>
+    </div>
+    <div class="waze-frame-wrap">
+      <iframe id="waze-frame" title="Waze Live Map para Armenia, Quindío" src="https://embed.waze.com/es/iframe?zoom=13&amp;lat=4.5339&amp;lon=-75.6811" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p class="waze-disclaimer">La disponibilidad y detalle de incidentes depende de Waze. Si el visor no carga en tu navegador, utiliza “Abrir Waze”. No se muestran métricas de velocidad o congestión calculadas por nuestro proyecto.</p>
+  </section>
+
+  <footer class="footer">
+    Prototipo de investigación · Armenia, Quindío · Teselas © Esri y fuentes indicadas · Panel externo Waze · Análisis histórico Gi* y Kernel 2023–2025
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
